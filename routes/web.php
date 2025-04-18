@@ -21,4 +21,17 @@ Route::middleware(['auth'])->group(function () {
     Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
 });
 
+Route::get('/team', function () {
+    return view('team');
+})->name('team');
+Route::get('/blog', function () {
+    return view('blog');
+})->name('blog');
+Route::get('/events', function () {
+    return view('events');
+})->name('events');
+Route::get('/contact', function () {
+    return view('contact');
+})->name('contact');
+
 require __DIR__.'/auth.php';
