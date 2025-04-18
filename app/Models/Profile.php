@@ -2,15 +2,14 @@
 
 namespace App\Models;
 
-use Database\Factories\CommentFactory;
+use Database\Factories\ProfileFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 
-class Comment extends Model
+class Profile extends Model
 {
-    /** @use HasFactory<CommentFactory> */
+    /** @use HasFactory<ProfileFactory> */
     use HasFactory;
 
     /**
@@ -20,23 +19,13 @@ class Comment extends Model
      */
     protected $fillable = [
         'user_id',
-        'post_id',
-        'parent_id',
-        'comment',
+        'image',
+        'biography',
+        'city',
     ];
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function post(): BelongsTo
-    {
-        return $this->belongsTo(Post::class);
-    }
-
-    public function likes(): MorphMany
-    {
-        return $this->morphMany(Like::class, 'likeable');
     }
 }
