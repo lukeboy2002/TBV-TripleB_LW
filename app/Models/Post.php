@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Database\Factories\PostFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Str;
 
 class Post extends Model
 {
@@ -57,6 +59,35 @@ class Post extends Model
     public function profile(): HasOne
     {
         return $this->hasOne(Profile::class);
+    }
+
+    public function scopePublished($query): void
+    {
+        $query->where('published_at', '<=', Carbon::now());
+    }
+
+    public function scopeFeatured($query): void
+    {
+        $query->where('featured', true);
+    }
+
+    public function shortBody($words = 30): string
+    {
+        return Str::words(strip_tags($this->body), $words);
+    }
+
+    public function getFormattedDate()
+    {
+        return $this->published_at->format('j F Y');
+        //        // Stel de locale in op Nederlands
+        //        Carbon::setLocale('nl');
+        //
+        //        // Veronderstel dat published_at een datum string is
+        //        $publishedAt = Carbon::parse($this->published_at);
+        //
+        //        // Gebruik translatedFormat om de maand in het Nederlands te krijgen
+        //        return $publishedAt->translatedFormat('j F Y');
+
     }
 
     public function sluggable(): array

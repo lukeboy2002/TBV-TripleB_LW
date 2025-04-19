@@ -1,25 +1,26 @@
 <x-layouts.app :title="__('Home')">
     <div class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
-        <div class="grid auto-rows-min gap-4 md:grid-cols-3">
-            <div
-                class="relative aspect-video overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700">
-                <x-placeholder-pattern
-                    class="absolute inset-0 size-full stroke-gray-900/20 dark:stroke-neutral-100/20"/>
-            </div>
-            <div
-                class="relative aspect-video overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700">
-                <x-placeholder-pattern
-                    class="absolute inset-0 size-full stroke-gray-900/20 dark:stroke-neutral-100/20"/>
-            </div>
-            <div
-                class="relative aspect-video overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700">
-                <x-placeholder-pattern
-                    class="absolute inset-0 size-full stroke-gray-900/20 dark:stroke-neutral-100/20"/>
-            </div>
+        <div>
+            @foreach ($featuredPosts as $post)
+                <x-card.postindex :post="$post">
+                    {{ $post->title }}
+                </x-card.postindex>
+            @endforeach
         </div>
-        <div
-            class="relative h-full flex-1 overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700">
-            <x-placeholder-pattern class="absolute inset-0 size-full stroke-gray-900/20 dark:stroke-neutral-100/20"/>
+        <div class="flex flex-wrap">
+            <main class="flex w-full flex-col md:w-3/4">
+                <x-heading>Latest post</x-heading>
+                <div class="grid auto-rows-min gap-4 md:grid-cols-2">
+                    @foreach ($latestPosts as $post)
+                        <x-card.postindex :post="$post">
+                            {{ $post->title }}
+                        </x-card.postindex>
+                    @endforeach
+                </div>
+            </main>
+            <aside class="flex w-full flex-col px-3 md:w-1/4 mb-20">
+                SIDE
+            </aside>
         </div>
     </div>
 </x-layouts.app>
